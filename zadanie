@@ -1,0 +1,120 @@
+import math
+
+class FiguraGeometryczna:
+    def __init__(self):
+        pass
+
+    def info(self):
+        pass
+
+    def obwod(self):
+        pass
+
+    def pole(self):
+        pass
+
+
+class Kolo(FiguraGeometryczna):
+    def __init__(self, promien):
+        self.promien = promien
+
+    def info(self):
+        return f"Kolo o promieniu {self.promien}"
+
+    def obwod(self):
+        return 2 * math.pi * self.promien
+
+    def pole(self):
+        return math.pi * self.promien ** 2
+
+
+class Prostokat(FiguraGeometryczna):
+    def __init__(self, dlugosc, szerokosc):
+        self.dlugosc = dlugosc
+        self.szerokosc = szerokosc
+
+    def info(self):
+        return f"Prostokat o długosci {self.dlugosc} i szerokosci {self.szerokosc}"
+
+    def obwod(self):
+        return 2 * (self.dlugosc + self.szerokosc)
+
+    def pole(self):
+        return self.dlugosc * self.szerokosc
+
+
+class Kwadrat(Prostokat):
+    def __init__(self, bok):
+        super().__init__(bok, bok)
+
+    def info(self):
+        return f"Kwadrat o boku {self.dlugosc}"
+
+
+class Trojkat(FiguraGeometryczna):
+    def __liczby__(self, a, b, c, h=None):
+        self.a = a
+        self.b = b
+        self.c = c
+        self.h = h
+
+    def info(self):
+        if self.h:
+            return f"Trojkat o podstawach {self.a} i {self.b} oraz wysokosci {self.h}"
+        else:
+            return f"Trojkat o bokach {self.a}, {self.b} i {self.c}"
+
+    def obwod(self):
+        return self.a + self.b + self.c
+
+    def pole(self):
+            # Zastosowanie wzoru herona
+            print("wersja 2")
+            s = (self.a + self.b + self.c) / 2
+            return math.sqrt(s * (s - self.a) * (s - self.b) * (s - self.c))
+
+
+def utworz_figure():
+    print("Wybierz figurę:")
+    print("1. Kolo")
+    print("2. Prostokat")
+    print("3. Kwadrat")
+    print("4. Trojkat")
+    
+    wybor = input("Podaj numer figury: ")
+
+    if wybor == '1':
+        print("Obwod kola =2πr")
+        print("Pole kola =πr2")
+        promien = float(input("Podaj promień koła: "))
+        figura = Kolo(promien)
+    elif wybor == '2':
+        print("Obwod prostokata =2a+2b")
+        print("Pole prostokata =ab")
+        dlugosc = float(input("Podaj długość prostokąta: "))
+        szerokosc = float(input("Podaj szerokość prostokąta: "))
+        figura = Prostokat(dlugosc, szerokosc)
+    elif wybor == '3':
+        print("Obwod kwadratu =4a")
+        print("Pole kwadratu =a^2")
+        bok = float(input("Podaj dlugosc boku kwadratu: "))
+        figura = Kwadrat(bok)
+    elif wybor == '4':
+        print("Obwod trojkata =a+b+c")
+        print("wzór herona na obliczanie pola trójkąta S, gdy dane są jego boki a, b, c: S = sqrt(p(p-a)(p-b)(p-c)) , gdzie p = (a + b + c)/2 — połowa obwodu trójkąta")
+        a = float(input("Podaj długość pierwszego boku trojkata: "))
+        b = float(input("Podaj długość drugiego boku trojkata: "))
+        c = float(input("Podaj długość trzeciego boku trojkata: "))
+        figura = Trojkat(a, b, c)
+    else:
+        print("Nieprawidłowy wybór.")
+        return None
+
+    return figura
+
+
+figura = utworz_figure()
+if figura:
+    print(figura.info())
+    print("Obwod:", figura.obwod())
+    print("Pole:", figura.pole())
